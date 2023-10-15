@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 require("dotenv").config();
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes");
@@ -9,6 +10,7 @@ const dbURL = process.env.MONGO_URL;
 
 // express app
 const app = express();
+app.use(bodyParser.json());
 
 // middleware
 app.use(express.json());

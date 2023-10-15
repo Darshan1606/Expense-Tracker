@@ -1,8 +1,10 @@
-# FinSquare 
+## FinSquare
 
-# Client .env
+## Client .env
+
 REACT_APP_BACKEND_URL
 
-# Server .env
+## Server .env
+
 PORT
 MONGO_URL

@@ -8,4 +8,5 @@ export const EXPENSE_PREFIX_PATH = "/expense";
 export const SAVING_PREFIX_PATH = "/saving";
 export const INCOME_PREFIX_PATH = "/income";
 export const GIVETAKE_PREFIX_PATH = "/give-and-take";
+export const REPORTS_PREFIX_PATH = "/reports";
 export const CONFIGURATION_PREFIX_PATH = "/configurations";

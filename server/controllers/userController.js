@@ -10,7 +10,14 @@ const UserController = {
       res.status(500).json({ error: error.message });
     }
   },
-  // Implement other controller methods here
+  createUser: async (req, res) => {
+    try {
+      const user = await UserService.createUser(req.body);
+      res.json(user);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
 };
 
 module.exports = UserController;

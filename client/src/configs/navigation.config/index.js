@@ -4,6 +4,7 @@ import expenseNavigationConfig from "./expense.Navigation.Config";
 import savingNavigationConfig from "./saving.Navigation.Config";
 import incomeNavigationConfig from "./income.Navigation.Config";
 import givetakeNavigationConfig from "./givetake.Navigation.Config";
+import reportsNavigationConfig from "./reports.Nabigation.Config";
 
 const navigationConfig = [
   ...dashboardNavigationConfig,
@@ -11,6 +12,7 @@ const navigationConfig = [
   ...incomeNavigationConfig,
   ...savingNavigationConfig,
   ...givetakeNavigationConfig,
+  ...reportsNavigationConfig,
   ...configurationsNavigationConfig,
 ];
 

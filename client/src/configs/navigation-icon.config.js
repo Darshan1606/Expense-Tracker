@@ -2,6 +2,7 @@ import {
   HiArchive,
   HiBadgeCheck,
   HiCurrencyRupee,
+  HiDocumentText,
   HiPuzzle,
   HiSwitchHorizontal,
   HiTemplate,
@@ -13,6 +14,7 @@ const navigationIcon = {
   expense: <HiArchive />,
   income: <HiCurrencyRupee />,
   saving: <HiBadgeCheck />,
+  reports: <HiDocumentText />,
   givetake: <HiSwitchHorizontal />,
 };
 

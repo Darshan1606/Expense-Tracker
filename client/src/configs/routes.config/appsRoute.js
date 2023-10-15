@@ -5,6 +5,7 @@ import {
   EXPENSE_PREFIX_PATH,
   GIVETAKE_PREFIX_PATH,
   INCOME_PREFIX_PATH,
+  REPORTS_PREFIX_PATH,
   SAVING_PREFIX_PATH,
 } from "constants/route.constant";
 import { ADMIN } from "constants/roles.constant";
@@ -38,6 +39,12 @@ const appsRoute = [
     key: "apps.givetake",
     path: `${GIVETAKE_PREFIX_PATH}`,
     component: React.lazy(() => import("views/Income")),
+    authority: [ADMIN],
+  },
+  {
+    key: "apps.reports",
+    path: `${REPORTS_PREFIX_PATH}`,
+    component: React.lazy(() => import("views/Reports")),
     authority: [ADMIN],
   },
   {
