@@ -1,4 +1,4 @@
-# Expense-Tracker
+# FinSquare 
 
 # Client .env
 REACT_APP_BACKEND_URL
