@@ -38,7 +38,7 @@ const SignInForm = (props) => {
     };
     setSubmitting(true);
 
-    const result = await signIn(JSON.stringify(loginData));
+    const result = await signIn(loginData);
 
     if (!result.success) {
       setMessage(result.message);
@@ -56,8 +56,8 @@ const SignInForm = (props) => {
       )}
       <Formik
         initialValues={{
-          email: "",
-          password: "",
+          email: "darshantarsariya06@gmail.com",
+          password: "Darshan@111",
           rememberMe: true,
         }}
         validationSchema={validationSchema}

@@ -4,9 +4,11 @@ const UserService = {
   getAllUsers: async () => {
     return await UserModel.find();
   },
+  findUser: async (data) => {
+    return await UserModel.findOne(data);
+  },
   createUser: async (user) => {
-    console.log("user", user);
-    return await UserModel.create(user);
+    return await new UserModel(user);
   },
 };
 

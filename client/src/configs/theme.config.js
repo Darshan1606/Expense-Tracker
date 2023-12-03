@@ -1,5 +1,5 @@
 export const themeConfig = {
-  themeColor: "sky",
+  themeColor: "indigo",
   direction: "ltr",
   mode: "light",
   locale: "en",
