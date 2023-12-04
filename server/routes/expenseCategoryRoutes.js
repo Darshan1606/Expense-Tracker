@@ -15,4 +15,16 @@ router.post(
   ExpenseCategoryController.addExpenseCategory
 );
 
+router.put(
+  "/expense-category/:id",
+  AuthMiddleware.authenticateToken,
+  ExpenseCategoryController.editExpenseCategory
+);
+
+router.delete(
+  "/expense-category/:id",
+  AuthMiddleware.authenticateToken,
+  ExpenseCategoryController.deleteExpenseCategory
+);
+
 module.exports = router;
