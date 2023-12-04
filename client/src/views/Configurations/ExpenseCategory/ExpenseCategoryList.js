@@ -7,6 +7,7 @@ import Th from "components/ui/Table/Th";
 import Tr from "components/ui/Table/Tr";
 import React, { useState } from "react";
 import { HiOutlineTrash } from "react-icons/hi";
+import { useSelector } from "react-redux";
 import { deleteExpenseCategory } from "service/configurationService";
 
 const columns = [
@@ -20,13 +21,10 @@ const columns = [
   },
 ];
 
-const data = [
-  { id: 1, name: "Cat1" },
-  { id: 2, name: "Cat2" },
-];
-
 const ExpenseCategoryList = ({ isLoading, setFlag }) => {
-  //   const { quickLinksData, isDeleteOpen, setIsDeleteOpen } = useQuickLinks();
+  const expenseCategoryData = useSelector(
+    (state) => state.config.config.setExpenseCategoryData
+  );
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedData, setSelectedData] = useState();
 
@@ -75,7 +73,7 @@ const ExpenseCategoryList = ({ isLoading, setFlag }) => {
   return (
     <>
       {!isLoading ? (
-        data?.length > 0 ? (
+        expenseCategoryData?.length > 0 ? (
           <>
             <Table>
               <THead>
@@ -86,10 +84,10 @@ const ExpenseCategoryList = ({ isLoading, setFlag }) => {
                 </Tr>
               </THead>
               <TBody>
-                {data?.map((item) => {
+                {expenseCategoryData?.map((item) => {
                   return (
                     <Tr key={item._id}>
-                      <Td>{item?.name}</Td>
+                      <Td>{item?.expense_category_name}</Td>
                       <Td>
                         <div className="flex justify-start text-lg">
                           <span

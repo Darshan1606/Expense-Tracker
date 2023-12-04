@@ -32,7 +32,7 @@ const AddExpenseCategory = forwardRef((props, ref) => {
     setSubmitting(true);
 
     const payload = {
-      name: values.name,
+      expense_category_name: values.name,
     };
 
     try {

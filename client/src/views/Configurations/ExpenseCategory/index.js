@@ -28,14 +28,18 @@ const ExpenseCategory = () => {
       let response;
       response = await getAllExpenseCategory();
 
-      dispatch(setExpenseCategoryData(response?.data));
+      dispatch(setExpenseCategoryData(response?.result));
 
       setFlag(false);
     } catch (err) {
       console.log(err);
       toast.push(
         <Notification
-          title={err?.response?.data?.error?.message}
+          title={
+            err?.response?.data?.error?.message ||
+            err?.response?.data?.error ||
+            err?.response?.data?.message
+          }
           type="danger"
           duration={1500}
         ></Notification>,

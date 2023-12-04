@@ -21,10 +21,10 @@ api.interceptors.request.use(
       const persistData = deepParseJson(rawPersistData);
       const token = persistData?.auth?.session?.token;
       config.headers = {
-        Authorization: `${token}`,
-        // Accept: "application/json",
+        token: `${token}`,
+        Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
-        // "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": "*",
         // "Cache-Control":
         //   "no-store, no-cache, max-age=0, must-revalidate, proxy-revalidate",
       };
