@@ -1,8 +1,8 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import quickLinks from "./quickLinksSlice";
+import giveTake from "./giveTakeSlice";
 
 const reducer = combineReducers({
-    quickLinks,
+  giveTake,
 });
 
 export default reducer;

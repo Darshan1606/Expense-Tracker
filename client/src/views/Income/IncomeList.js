@@ -6,28 +6,34 @@ import Td from "components/ui/Table/Td";
 import Th from "components/ui/Table/Th";
 import Tr from "components/ui/Table/Tr";
 import React, { useState } from "react";
-import { HiOutlineTrash } from "react-icons/hi";
-import { removeQuickLinks } from "service/quickLinksService";
-import useQuickLinks from "utils/hooks/useQuickLinks";
+import { HiOutlineTrash, HiPencil } from "react-icons/hi";
+import { useSelector } from "react-redux";
+import { deleteIncome } from "service/incomeService";
+import IncomeForm from "./IncomeForm";
 
 const columns = [
   {
+    _id: 1,
+    name: "Month-Year",
+  },
+  {
     _id: 2,
-    name: "Name",
+    name: "Amount",
   },
   {
     _id: 3,
-    name: "Link",
+    name: "Income From",
   },
   {
-    _id: 3,
+    _id: 4,
     name: "Action",
   },
 ];
 
-const QuickLinksList = ({ isLoading, setFlag }) => {
-  const { quickLinksData, isDeleteOpen, setIsDeleteOpen } = useQuickLinks();
-
+const IncomeList = ({ isLoading, setFlag }) => {
+  const incomeData = useSelector((state) => state.income.income.setIncomeData);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedData, setSelectedData] = useState();
 
   const handleDeleteModal = (data) => {
@@ -38,11 +44,11 @@ const QuickLinksList = ({ isLoading, setFlag }) => {
   const onDelete = async () => {
     setIsDeleteOpen(false);
     try {
-      const resp = await removeQuickLinks(selectedData?._id);
+      const resp = await deleteIncome(selectedData?._id);
       if (resp.success) {
         toast.push(
           <Notification
-            title={"Quick Links Deleted Successfully"}
+            title={"Income Deleted Successfully"}
             type="success"
             duration={1500}
           ></Notification>,
@@ -54,9 +60,14 @@ const QuickLinksList = ({ isLoading, setFlag }) => {
       }
     } catch (err) {
       console.log(err);
+
       toast.push(
         <Notification
-          title={err?.response?.data?.error?.message}
+          title={
+            err?.response?.data?.error?.message ||
+            err?.response?.data?.error ||
+            err?.response?.data?.message
+          }
           type="danger"
           duration={1500}
         ></Notification>,
@@ -70,7 +81,7 @@ const QuickLinksList = ({ isLoading, setFlag }) => {
   return (
     <>
       {!isLoading ? (
-        quickLinksData?.length > 0 ? (
+        incomeData?.length > 0 ? (
           <>
             <Table>
               <THead>
@@ -81,13 +92,23 @@ const QuickLinksList = ({ isLoading, setFlag }) => {
                 </Tr>
               </THead>
               <TBody>
-                {quickLinksData?.map((item) => {
+                {incomeData?.map((item) => {
                   return (
                     <Tr key={item._id}>
-                      <Td>{item?.name}</Td>
-                      <Td>{item?.link}</Td>
+                      <Td>{`${item?.month?.toUpperCase()}-${item?.year}`}</Td>
+                      <Td>{item?.amount}</Td>
+                      <Td>{item?.income_from}</Td>
                       <Td>
                         <div className="flex justify-start text-lg">
+                          <span
+                            className={`cursor-pointer p-2 hover:text-blue-500`}
+                            onClick={() => {
+                              setIsModalOpen(true);
+                              setSelectedData(item);
+                            }}
+                          >
+                            <HiPencil />
+                          </span>
                           <span
                             className={`cursor-pointer p-2 hover:text-red-500`}
                             onClick={() => handleDeleteModal(item)}
@@ -113,20 +134,29 @@ const QuickLinksList = ({ isLoading, setFlag }) => {
         </div>
       )}
 
+      <IncomeForm
+        incomeData={selectedData}
+        type="edit"
+        setFlag={setFlag}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onRequestClose={() => setIsModalOpen(false)}
+      />
+
       <>
         <ConfirmDialog
           isOpen={isDeleteOpen}
           onClose={() => setIsDeleteOpen(false)}
           onRequestClose={() => setIsDeleteOpen(false)}
           type="danger"
-          title="Delete Quick Link"
+          title="Delete Income"
           onCancel={() => setIsDeleteOpen(false)}
           onConfirm={onDelete}
           confirmButtonColor="red-600"
         >
           <p>
-            Are you sure you want to delete this Quick Link? This action cannot
-            be undone.
+            Are you sure you want to delete this Income? This action cannot be
+            undone.
           </p>
         </ConfirmDialog>
       </>
@@ -134,4 +164,4 @@ const QuickLinksList = ({ isLoading, setFlag }) => {
   );
 };
 
-export default QuickLinksList;
+export default IncomeList;

@@ -3,6 +3,8 @@ import theme from "./theme/themeSlice";
 import auth from "./auth";
 import base from "./base";
 import config from "./config";
+import income from "./income";
+import giveTake from "./giveTake";
 
 const rootReducer = (asyncReducers) => (state, action) => {
   const combinedReducer = combineReducers({
@@ -10,6 +12,8 @@ const rootReducer = (asyncReducers) => (state, action) => {
     auth,
     base,
     config,
+    income,
+    giveTake,
     ...asyncReducers,
   });
   return combinedReducer(state, action);

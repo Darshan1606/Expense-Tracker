@@ -35,7 +35,7 @@ const ExpenseCategoryController = {
   },
   editExpenseCategory: async (req, res) => {
     try {
-      let isExists = await ExpenseCategoryService.findExpenseCategory(
+      let isExists = await ExpenseCategoryService.findExpenseCategoryById(
         req.params.id
       );
 
@@ -67,7 +67,7 @@ const ExpenseCategoryController = {
   },
   deleteExpenseCategory: async (req, res) => {
     try {
-      let isExists = await ExpenseCategoryService.findExpenseCategory(
+      let isExists = await ExpenseCategoryService.findExpenseCategoryById(
         req.params.id
       );
 

@@ -13,15 +13,17 @@ const AuthMiddleware = {
       });
 
     jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
-      console.log("err", err);
+      console.log("erriiii", err);
       console.log("user", user);
 
-      if (err)
+      if (err) {
         return res.json({
           success: false,
           isAuth: false,
           message: "Token is expired or Invalid token",
         });
+      }
+
       req.user = user;
       next();
     });

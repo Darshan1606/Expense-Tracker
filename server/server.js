@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 
 const authRoutes = require("./routes/authRoutes");
 const expenseCategoryRoutes = require("./routes/expenseCategoryRoutes");
+const incomeRoutes = require("./routes/incomeRoutes");
+const giveTakeRoutes = require("./routes/giveTakeRoutes");
 
 const port = process.env.PORT || 3000;
 const dbURL = process.env.MONGO_URL;
@@ -41,3 +43,5 @@ mongoose
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api", expenseCategoryRoutes);
+app.use("/api", incomeRoutes);
+app.use("/api", giveTakeRoutes);

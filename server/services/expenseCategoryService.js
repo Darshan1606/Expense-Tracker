@@ -1,7 +1,7 @@
 const ExpenseCategoryModel = require("../models/expenseCategoryModal");
 
 const ExpenseCategoryService = {
-  findExpenseCategory: async (id) => {
+  findExpenseCategoryById: async (id) => {
     return await ExpenseCategoryModel.findById(id);
   },
   getAllExpenseCategory: async () => {

@@ -6,9 +6,11 @@ import AddExpenseCategory from "./AddExpenseCategory";
 import { setExpenseCategoryData } from "store/config/configSlice";
 import { getAllExpenseCategory } from "service/configurationService";
 import { useDispatch } from "react-redux";
+import useAuth from "utils/hooks/useAuth";
 
 const ExpenseCategory = () => {
   const dispatch = useDispatch();
+  const { signOut } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [flag, setFlag] = useState(true);
@@ -27,10 +29,15 @@ const ExpenseCategory = () => {
     try {
       let response;
       response = await getAllExpenseCategory();
+      if (response?.success) {
+        dispatch(setExpenseCategoryData(response?.result));
 
-      dispatch(setExpenseCategoryData(response?.result));
-
-      setFlag(false);
+        setFlag(false);
+      } else {
+        if (response?.isAuth === false) {
+          signOut();
+        }
+      }
     } catch (err) {
       console.log(err);
       toast.push(
