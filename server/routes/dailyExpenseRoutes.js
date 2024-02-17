@@ -1,30 +1,30 @@
 const express = require("express");
 const router = express.Router();
 const AuthMiddleware = require("../middleware/authMiddleware");
-const GiveTakeController = require("../controllers/giveTakeController");
+const DailyExpenseController = require("../controllers/dailyExpenseController");
 
-router.post(
-  "/get-all-give-take",
+router.get(
+  "/daily-expense",
   AuthMiddleware.authenticateToken,
-  GiveTakeController.getAllGiveTake
+  DailyExpenseController.getAllDailyExpense
 );
 
 router.post(
-  "/give-take",
+  "/daily-expense",
   AuthMiddleware.authenticateToken,
-  GiveTakeController.addGiveTake
+  DailyExpenseController.addDailyExpense
 );
 
 router.put(
-  "/give-take/:id",
+  "/daily-expense/:id",
   AuthMiddleware.authenticateToken,
-  GiveTakeController.editGiveTake
+  DailyExpenseController.editDailyExpense
 );
 
 router.delete(
-  "/give-take/:id",
+  "/daily-expense/:id",
   AuthMiddleware.authenticateToken,
-  GiveTakeController.deleteGiveTake
+  DailyExpenseController.deleteDailyExpense
 );
 
 module.exports = router;

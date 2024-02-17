@@ -1,22 +1,22 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 
 const authRoutes = require("./routes/authRoutes");
 const expenseCategoryRoutes = require("./routes/expenseCategoryRoutes");
 const incomeRoutes = require("./routes/incomeRoutes");
 const giveTakeRoutes = require("./routes/giveTakeRoutes");
+const dailyExpenseRoutes = require("./routes/dailyExpenseRoutes");
 
 const port = process.env.PORT || 3000;
-const dbURL = process.env.MONGO_URL;
 
 // express app
 const app = express();
 // parse requests of content-type - application/json
-app.use(express.json());
+app.use(bodyParser.json({ limit: "15mb" }));
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 // Use the cors middleware
 app.use(cors());
@@ -32,16 +32,11 @@ app.listen(port, () => {
 });
 
 // connect to mongodb & listen for requests
-mongoose
-  .connect(dbURL)
-  .then(() => {
-    // listen for requests
-    console.log("DB Connnected...");
-  })
-  .catch((err) => console.log(err));
+require("./config/dbConnection");
 
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api", expenseCategoryRoutes);
 app.use("/api", incomeRoutes);
 app.use("/api", giveTakeRoutes);
+app.use("/api", dailyExpenseRoutes);

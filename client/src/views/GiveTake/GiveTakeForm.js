@@ -17,7 +17,7 @@ import { formatDateInYYYYMMDD } from "utils/helper/helper";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object().shape({
-  giveTake: Yup.string().required(),
+  giveTake: Yup.object().required(),
   personName: Yup.string().required(),
   amount: Yup.number().required(),
   date: Yup.date().required(),
@@ -52,7 +52,7 @@ const GiveTakeForm = forwardRef((props, ref) => {
     setSubmitting(true);
 
     const payload = {
-      give_take: values?.giveTake,
+      give_take: values?.giveTake?.value,
       person_name: values?.personName,
       amount: values?.amount,
       date: formatDateInYYYYMMDD(values?.date),
@@ -105,7 +105,7 @@ const GiveTakeForm = forwardRef((props, ref) => {
       }
     } else if (type === "edit") {
       try {
-        const resp = await editGiveTake(payload);
+        const resp = await editGiveTake(intiEntry?._id, payload);
         if (resp?.success) {
           toast.push(
             <Notification
@@ -140,7 +140,7 @@ const GiveTakeForm = forwardRef((props, ref) => {
 
     setSubmitting(false);
   };
-
+  console.log("intiEntry", intiEntry);
   return (
     <>
       <Drawer
@@ -180,6 +180,7 @@ const GiveTakeForm = forwardRef((props, ref) => {
         >
           {({ values, touched, errors, isSubmitting }) => (
             <Form>
+              {console.log("values", values)}
               <FormContainer>
                 <FormItem
                   className="mb-8"
@@ -194,7 +195,7 @@ const GiveTakeForm = forwardRef((props, ref) => {
                         placeholder="Please Select"
                         options={giveOrTakeOptions}
                         onChange={(val) => {
-                          form.setFieldValue(field.name, val?.value);
+                          form.setFieldValue(field.name, val);
                         }}
                       ></Select>
                     )}

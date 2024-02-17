@@ -5,7 +5,18 @@ const IncomeService = {
     return await IncomeModel.findById(id);
   },
   getAllIncome: async () => {
-    return await IncomeModel.find();
+    return await IncomeModel.find(
+      {},
+      { _id: 1, month: 1, year: 1, amount: 1, income_from: 1 }
+    );
+  },
+  getAllIncomeWithPagination: async (pageNo, pageSize) => {
+    return await IncomeModel.find(
+      {},
+      { _id: 1, month: 1, year: 1, amount: 1, income_from: 1 }
+    )
+      .skip((pageNo - 1) * pageSize)
+      .limit(pageSize);
   },
   addIncome: async (income) => {
     return new IncomeModel(income);

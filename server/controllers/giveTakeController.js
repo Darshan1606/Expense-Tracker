@@ -3,13 +3,28 @@ const GiveTakeService = require("../services/giveTakeService");
 const GiveTakeController = {
   getAllGiveTake: async (req, res) => {
     try {
-      const giveTakeData = await GiveTakeService.getAllGiveTake();
+      const req_body = req.body;
+      const pageNo = parseInt(req.query.page_no);
+      const pageSize = parseInt(req.query.page_size);
+      const giveTakeFilterText = req_body.give_take;
+      const totalData = await GiveTakeService.getAllGiveTake();
+      const giveTakeData = await GiveTakeService.getAllGiveTakeWithPagination(
+        giveTakeFilterText,
+        pageNo,
+        pageSize
+      );
       res.json({
         success: true,
         message: "get all give take successfully",
         result: giveTakeData,
+        pagination: {
+          page_no: pageNo,
+          page_size: pageSize,
+          total: totalData?.length,
+        },
       });
     } catch (error) {
+      console.log("error", error);
       res.json({ success: false, message: error.message });
     }
   },

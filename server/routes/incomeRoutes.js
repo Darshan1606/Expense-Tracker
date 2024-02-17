@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const AuthMiddleware = require("../middleware/authMiddleware");
 const IncomeController = require("../controllers/incomeController");
+const { ValidateBody } = require("../validation/user.validation");
+const { incomeSchema } = require("../validation/validation.schema");
 
 router.get(
   "/income",
@@ -11,12 +13,14 @@ router.get(
 
 router.post(
   "/income",
+  ValidateBody(incomeSchema),
   AuthMiddleware.authenticateToken,
   IncomeController.addIncome
 );
 
 router.put(
   "/income/:id",
+  ValidateBody(incomeSchema),
   AuthMiddleware.authenticateToken,
   IncomeController.editIncome
 );

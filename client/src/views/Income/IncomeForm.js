@@ -15,7 +15,7 @@ import { addIncome, editIncome } from "service/incomeService";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object().shape({
-  month: Yup.string().required(),
+  month: Yup.object().required(),
   year: Yup.number().required(),
   amount: Yup.number().required(),
   incomeFrom: Yup.string().required(),
@@ -83,13 +83,13 @@ const IncomeForm = forwardRef((props, ref) => {
     onRequestClose,
     setFlag,
   } = props;
-
+  console.log("incomeData", incomeData);
   // add Income
   const onSave = async (values, setSubmitting) => {
     setSubmitting(true);
 
     const payload = {
-      month: values.month,
+      month: values.month?.value,
       year: values.year,
       amount: values.amount,
       income_from: values.incomeFrom,
@@ -129,7 +129,7 @@ const IncomeForm = forwardRef((props, ref) => {
       }
     } else if (type === "edit") {
       try {
-        const resp = await editIncome(payload);
+        const resp = await editIncome(incomeData?._id, payload);
         if (resp?.success) {
           toast.push(
             <Notification
@@ -202,6 +202,8 @@ const IncomeForm = forwardRef((props, ref) => {
         >
           {({ values, touched, errors, isSubmitting }) => (
             <Form>
+              {console.log("values", values)}
+              {console.log("errors", errors)}
               <FormContainer>
                 <FormItem
                   className="mb-8"
@@ -216,7 +218,7 @@ const IncomeForm = forwardRef((props, ref) => {
                         placeholder="Please Select"
                         options={months}
                         onChange={(val) => {
-                          form.setFieldValue(field.name, val?.value);
+                          form.setFieldValue(field.name, val);
                         }}
                       ></Select>
                     )}
