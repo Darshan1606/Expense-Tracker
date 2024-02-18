@@ -15,6 +15,7 @@ const IncomeService = {
       {},
       { _id: 1, month: 1, year: 1, amount: 1, income_from: 1 }
     )
+      .sort({ year: -1, month: -1 })
       .skip((pageNo - 1) * pageSize)
       .limit(pageSize);
   },

@@ -14,6 +14,11 @@ const Income = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [flag, setFlag] = useState(true);
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    total: 0,
+  });
+  const PAGE_SIZE = 10;
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -28,8 +33,13 @@ const Income = () => {
     setIsLoading(true);
     try {
       let response;
-      response = await getAllIncome();
+      response = await getAllIncome(pagination?.currentPage, PAGE_SIZE);
       if (response?.success) {
+        setPagination({
+          ...pagination,
+          currentPage: response?.pagination?.page_no,
+          total: response?.pagination?.total,
+        });
         dispatch(setIncomeData(response?.result));
 
         setFlag(false);
@@ -79,7 +89,12 @@ const Income = () => {
         />
       </Card>
       <Card className="mb-4">
-        <IncomeList isLoading={isLoading} setFlag={setFlag} />
+        <IncomeList
+          isLoading={isLoading}
+          setFlag={setFlag}
+          pagination={pagination}
+          setPagination={setPagination}
+        />
       </Card>
     </>
   );

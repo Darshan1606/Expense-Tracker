@@ -8,6 +8,7 @@ import {
   Select,
   toast,
 } from "components/ui";
+import { months } from "constants/data.constant";
 import { Field, Form, Formik } from "formik";
 import React, { forwardRef } from "react";
 import { AiOutlineSave } from "react-icons/ai";
@@ -21,57 +22,6 @@ const validationSchema = Yup.object().shape({
   incomeFrom: Yup.string().required(),
 });
 
-const months = [
-  {
-    value: "january",
-    label: "January",
-  },
-  {
-    value: "february",
-    label: "February",
-  },
-  {
-    value: "march",
-    label: "March",
-  },
-  {
-    value: "april",
-    label: "April",
-  },
-  {
-    value: "may",
-    label: "May",
-  },
-  {
-    value: "june",
-    label: "June",
-  },
-  {
-    value: "july",
-    label: "July",
-  },
-  {
-    value: "august",
-    label: "August",
-  },
-  {
-    value: "september",
-    label: "September",
-  },
-  {
-    value: "october",
-    label: "October",
-  },
-  {
-    value: "november",
-    label: "November",
-  },
-  {
-    value: "december",
-    label: "December",
-  },
-];
-
 const IncomeForm = forwardRef((props, ref) => {
   const { formikRef } = ref || {};
   const {
@@ -83,7 +33,7 @@ const IncomeForm = forwardRef((props, ref) => {
     onRequestClose,
     setFlag,
   } = props;
-  console.log("incomeData", incomeData);
+
   // add Income
   const onSave = async (values, setSubmitting) => {
     setSubmitting(true);

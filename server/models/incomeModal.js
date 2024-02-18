@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const incomeSchema = new mongoose.Schema(
   {
     month: {
-      type: String,
+      type: Number,
       required: true,
     },
     year: {

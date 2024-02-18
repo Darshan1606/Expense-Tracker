@@ -1,8 +1,8 @@
 import api from "./api";
 
 // income
-export const getAllIncome = () => {
-  return api.get("/income");
+export const getAllIncome = (pageNo, pageSize) => {
+  return api.get(`/income?page_no=${pageNo}&page_size=${pageSize}`);
 };
 
 export const addIncome = (data) => {

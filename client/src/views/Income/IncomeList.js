@@ -1,5 +1,5 @@
 import { ConfirmDialog } from "components/shared";
-import { Notification, Spinner, Table, toast } from "components/ui";
+import { Notification, Pagination, Spinner, Table, toast } from "components/ui";
 import TBody from "components/ui/Table/TBody";
 import THead from "components/ui/Table/THead";
 import Td from "components/ui/Table/Td";
@@ -10,6 +10,7 @@ import { HiOutlineTrash, HiPencil } from "react-icons/hi";
 import { useSelector } from "react-redux";
 import { deleteIncome } from "service/incomeService";
 import IncomeForm from "./IncomeForm";
+import { months } from "constants/data.constant";
 
 const columns = [
   {
@@ -30,7 +31,7 @@ const columns = [
   },
 ];
 
-const IncomeList = ({ isLoading, setFlag }) => {
+const IncomeList = ({ isLoading, setFlag, pagination, setPagination }) => {
   const incomeData = useSelector((state) => state.income.income.setIncomeData);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -93,9 +94,12 @@ const IncomeList = ({ isLoading, setFlag }) => {
               </THead>
               <TBody>
                 {incomeData?.map((item) => {
+                  const month = months?.filter(
+                    (m) => m.value === item?.month
+                  )[0];
                   return (
                     <Tr key={item._id}>
-                      <Td>{`${item?.month?.toUpperCase()}-${item?.year}`}</Td>
+                      <Td>{`${month?.label}-${item?.year}`}</Td>
                       <Td>{item?.amount}</Td>
                       <Td>{item?.income_from}</Td>
                       <Td>
@@ -122,6 +126,19 @@ const IncomeList = ({ isLoading, setFlag }) => {
                 })}
               </TBody>
             </Table>
+            <Pagination
+              displayTotal={pagination?.total}
+              currentPage={pagination?.currentPage}
+              total={pagination?.total}
+              pageSize={10}
+              onChange={(page) => {
+                setPagination({
+                  ...pagination,
+                  currentPage: page,
+                });
+                setFlag(true);
+              }}
+            />
           </>
         ) : (
           <>

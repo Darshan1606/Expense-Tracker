@@ -10,7 +10,7 @@ module.exports = {
     id: validate.id,
   }),
   incomeSchema: Joi.object().keys({
-    month: validate.reqString,
+    month: validate.reqNumber,
     year: validate.reqNumber,
     amount: validate.reqNumber,
     income_from: validate.reqString,
