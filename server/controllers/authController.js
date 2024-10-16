@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { findUser, createUser } = require("../services/userService");
 
-const AuthController = {
+module.exports = {
   signUp: async (req, res, next) => {
     try {
       let user = {
@@ -85,5 +85,3 @@ const AuthController = {
     }
   },
 };
-
-module.exports = AuthController;

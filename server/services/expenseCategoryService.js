@@ -1,25 +1,23 @@
-const ExpenseCategoryModel = require("../models/expenseCategoryModal");
+const ExpenseCategoryModel = require("../models/expenseCategory.modal");
 
-const ExpenseCategoryService = {
-  findExpenseCategoryById: async (id) => {
+module.exports = {
+  findExpenseCategoryByIdService: async (id) => {
     return await ExpenseCategoryModel.findById(id);
   },
-  getAllExpenseCategory: async () => {
+  getAllExpenseCategoryService: async () => {
     return await ExpenseCategoryModel.find();
   },
-  addExpenseCategory: async (expenseCategory) => {
+  addExpenseCategoryService: async (expenseCategory) => {
     return new ExpenseCategoryModel(expenseCategory);
   },
-  editExpenseCategory: async (id, expenseCategory) => {
+  editExpenseCategoryService: async (id, expenseCategory) => {
     return await ExpenseCategoryModel.findByIdAndUpdate(
       id,
       { $set: expenseCategory },
       { new: true }
     );
   },
-  deleteExpenseCategory: async (id) => {
+  deleteExpenseCategoryService: async (id) => {
     return await ExpenseCategoryModel.findByIdAndDelete(id);
   },
 };
-
-module.exports = ExpenseCategoryService;

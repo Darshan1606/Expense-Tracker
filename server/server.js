@@ -2,12 +2,9 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
-const authRoutes = require("./routes/authRoutes");
-const expenseCategoryRoutes = require("./routes/expenseCategoryRoutes");
-const incomeRoutes = require("./routes/incomeRoutes");
-const giveTakeRoutes = require("./routes/giveTakeRoutes");
-const dailyExpenseRoutes = require("./routes/dailyExpenseRoutes");
+const router = require("./routes");
 
 const port = process.env.PORT || 3000;
 
@@ -19,7 +16,30 @@ app.use(bodyParser.json({ limit: "15mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 // Use the cors middleware
-app.use(cors());
+app.use(cors({ origin: "*" }));
+app.use(cookieParser());
+
+app.all("/*", function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Content-Type,accept,access_token,X-Requested-With"
+  );
+  next();
+});
+
+app.all("/", (req, res) => {
+  return res
+    .status(200)
+    .send("Fin Square is serving well, deploying latest code v1 💵");
+});
+
+app.all("*", async (req, res) => {
+  return res.status(200).send({
+    status: false,
+    message: `URL not found.`,
+  });
+});
 
 app.use((req, res, next) => {
   console.log(`${req.method} - ${req.url} - ${req.path}`);
@@ -35,8 +55,4 @@ app.listen(port, () => {
 require("./config/dbConnection");
 
 // Routes
-app.use("/api/auth", authRoutes);
-app.use("/api", expenseCategoryRoutes);
-app.use("/api", incomeRoutes);
-app.use("/api", giveTakeRoutes);
-app.use("/api", dailyExpenseRoutes);
+router.apiRoutes(app);

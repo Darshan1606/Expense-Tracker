@@ -1,13 +1,17 @@
-const GiveTakeModel = require("../models/giveTakeModal");
+const GiveTakeModel = require("../models/giveTake.modal");
 
-const GiveTakeService = {
-  findGiveTakeById: async (id) => {
+module.exports = {
+  findGiveTakeByIdService: async (id) => {
     return await GiveTakeModel.findById(id);
   },
-  getAllGiveTake: async () => {
+  getAllGiveTakeService: async () => {
     return await GiveTakeModel.find();
   },
-  getAllGiveTakeWithPagination: async (giveTakeText, pageNo, pageSize) => {
+  getAllGiveTakeWithPaginationService: async (
+    giveTakeText,
+    pageNo,
+    pageSize
+  ) => {
     return await GiveTakeModel.find(
       { give_take: { $eq: giveTakeText } },
       {
@@ -23,21 +27,17 @@ const GiveTakeService = {
       .skip((pageNo - 1) * pageSize)
       .limit(pageSize);
   },
-  addGiveTake: async (giveTake) => {
+  addGiveTakeService: async (giveTake) => {
     return new GiveTakeModel(giveTake);
   },
-  editGiveTake: async (id, giveTake) => {
+  editGiveTakeService: async (id, giveTake) => {
     return await GiveTakeModel.findByIdAndUpdate(
       id,
       { $set: giveTake },
       { new: true }
     );
   },
-  deleteGiveTake: async (id) => {
-    console.log("ididid", id);
-
+  deleteGiveTakeService: async (id) => {
     return await GiveTakeModel.findByIdAndDelete(id);
   },
 };
-
-module.exports = GiveTakeService;

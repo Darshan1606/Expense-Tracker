@@ -1,10 +1,15 @@
-const ExpenseCategoryService = require("../services/expenseCategoryService");
+const {
+  getAllExpenseCategoryService,
+  addExpenseCategoryService,
+  findExpenseCategoryByIdService,
+  editExpenseCategoryService,
+  deleteExpenseCategoryService,
+} = require("../services/expenseCategoryService");
 
-const ExpenseCategoryController = {
+module.exports = {
   getAllExpenseCategory: async (req, res) => {
     try {
-      const expenseCategory =
-        await ExpenseCategoryService.getAllExpenseCategory();
+      const expenseCategory = await getAllExpenseCategoryService();
       res.json({
         success: true,
         message: "get all expense categories successfully",
@@ -16,9 +21,7 @@ const ExpenseCategoryController = {
   },
   addExpenseCategory: async (req, res) => {
     try {
-      const expenseCategory = await ExpenseCategoryService.addExpenseCategory(
-        req.body
-      );
+      const expenseCategory = await addExpenseCategoryService(req.body);
       await expenseCategory.save();
 
       res.json({
@@ -35,16 +38,13 @@ const ExpenseCategoryController = {
   },
   editExpenseCategory: async (req, res) => {
     try {
-      let isExists = await ExpenseCategoryService.findExpenseCategoryById(
-        req.params.id
-      );
+      let isExists = await findExpenseCategoryByIdService(req.params.id);
 
       if (isExists) {
-        const expenseCategory =
-          await ExpenseCategoryService.editExpenseCategory(
-            req.params.id,
-            req.body
-          );
+        const expenseCategory = await editExpenseCategoryService(
+          req.params.id,
+          req.body
+        );
         await expenseCategory.save();
 
         res.json({
@@ -67,12 +67,10 @@ const ExpenseCategoryController = {
   },
   deleteExpenseCategory: async (req, res) => {
     try {
-      let isExists = await ExpenseCategoryService.findExpenseCategoryById(
-        req.params.id
-      );
+      let isExists = await findExpenseCategoryByIdService(req.params.id);
 
       if (isExists) {
-        await ExpenseCategoryService.deleteExpenseCategory(req.params.id);
+        await deleteExpenseCategoryService(req.params.id);
 
         res.json({
           success: true,
@@ -89,5 +87,3 @@ const ExpenseCategoryController = {
     }
   },
 };
-
-module.exports = ExpenseCategoryController;

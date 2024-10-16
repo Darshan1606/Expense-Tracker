@@ -1,12 +1,19 @@
-const IncomeService = require("../services/incomeService");
+const {
+  getAllIncomeService,
+  getAllIncomeWithPaginationService,
+  addIncomeService,
+  findIncomeByIdService,
+  editIncomeService,
+  deleteIncomeService,
+} = require("../services/incomeService");
 
-const IncomeController = {
+module.exports = {
   getAllIncome: async (req, res) => {
     try {
       const pageNo = parseInt(req.query.page_no);
       const pageSize = parseInt(req.query.page_size);
-      const totalData = await IncomeService.getAllIncome();
-      const incomeData = await IncomeService.getAllIncomeWithPagination(
+      const totalData = await getAllIncomeService();
+      const incomeData = await getAllIncomeWithPaginationService(
         pageNo,
         pageSize
       );
@@ -26,7 +33,7 @@ const IncomeController = {
   },
   addIncome: async (req, res) => {
     try {
-      const incomeData = await IncomeService.addIncome(req.body);
+      const incomeData = await addIncomeService(req.body);
       await incomeData.save();
 
       res.json({
@@ -40,13 +47,10 @@ const IncomeController = {
   },
   editIncome: async (req, res) => {
     try {
-      let isExists = await IncomeService.findIncomeById(req.params.id);
+      let isExists = await findIncomeByIdService(req.params.id);
 
       if (isExists) {
-        const incomeData = await IncomeService.editIncome(
-          req.params.id,
-          req.body
-        );
+        const incomeData = await editIncomeService(req.params.id, req.body);
         await incomeData.save();
 
         res.json({
@@ -66,10 +70,10 @@ const IncomeController = {
   },
   deleteIncome: async (req, res) => {
     try {
-      let isExists = await IncomeService.deleteIncome(req.params.id);
+      let isExists = await deleteIncomeService(req.params.id);
 
       if (isExists) {
-        await IncomeService.deleteIncome(req.params.id);
+        await deleteIncome(req.params.id);
 
         res.json({
           success: true,
@@ -86,5 +90,3 @@ const IncomeController = {
     }
   },
 };
-
-module.exports = IncomeController;

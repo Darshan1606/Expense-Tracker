@@ -1,10 +1,10 @@
-const DailyExpenseModel = require("../models/dailyExpenseModal");
+const DailyExpenseModel = require("../models/dailyExpense.modal");
 
-const DailyExpenseService = {
-  findDailyExpenseById: async (id) => {
+module.exports = {
+  findDailyExpenseByIdService: async (id) => {
     return await DailyExpenseModel.findById(id);
   },
-  getAllDailyExpense: async () => {
+  getAllDailyExpenseService: async () => {
     return await DailyExpenseModel.find({})
       .populate("expense_category")
       .exec()
@@ -16,19 +16,17 @@ const DailyExpenseService = {
         console.error(err);
       });
   },
-  addDailyExpense: async (expense) => {
+  addDailyExpenseService: async (expense) => {
     return new DailyExpenseModel(expense);
   },
-  editDailyExpense: async (id, expense) => {
+  editDailyExpenseService: async (id, expense) => {
     return await DailyExpenseModel.findByIdAndUpdate(
       id,
       { $set: expense },
       { new: true }
     );
   },
-  deleteDailyExpense: async (id) => {
+  deleteDailyExpenseService: async (id) => {
     return await DailyExpenseModel.findByIdAndDelete(id);
   },
 };
-
-module.exports = DailyExpenseService;

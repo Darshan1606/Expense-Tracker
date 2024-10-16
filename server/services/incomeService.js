@@ -1,16 +1,16 @@
-const IncomeModel = require("../models/incomeModal");
+const IncomeModel = require("../models/income.modal");
 
 const IncomeService = {
-  findIncomeById: async (id) => {
+  findIncomeByIdService: async (id) => {
     return await IncomeModel.findById(id);
   },
-  getAllIncome: async () => {
+  getAllIncomeService: async () => {
     return await IncomeModel.find(
       {},
       { _id: 1, month: 1, year: 1, amount: 1, income_from: 1 }
     );
   },
-  getAllIncomeWithPagination: async (pageNo, pageSize) => {
+  getAllIncomeWithPaginationService: async (pageNo, pageSize) => {
     return await IncomeModel.find(
       {},
       { _id: 1, month: 1, year: 1, amount: 1, income_from: 1 }
@@ -19,17 +19,17 @@ const IncomeService = {
       .skip((pageNo - 1) * pageSize)
       .limit(pageSize);
   },
-  addIncome: async (income) => {
+  addIncomeService: async (income) => {
     return new IncomeModel(income);
   },
-  editIncome: async (id, income) => {
+  editIncomeService: async (id, income) => {
     return await IncomeModel.findByIdAndUpdate(
       id,
       { $set: income },
       { new: true }
     );
   },
-  deleteIncome: async (id) => {
+  deleteIncomeService: async (id) => {
     return await IncomeModel.findByIdAndDelete(id);
   },
 };

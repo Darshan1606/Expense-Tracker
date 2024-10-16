@@ -1,14 +1,21 @@
-const GiveTakeService = require("../services/giveTakeService");
+const {
+  getAllGiveTakeService,
+  getAllGiveTakeWithPaginationService,
+  addGiveTakeService,
+  findGiveTakeByIdService,
+  editGiveTakeService,
+  deleteGiveTakeService,
+} = require("../services/giveTakeService");
 
-const GiveTakeController = {
+module.exports = {
   getAllGiveTake: async (req, res) => {
     try {
       const req_body = req.body;
       const pageNo = parseInt(req.query.page_no);
       const pageSize = parseInt(req.query.page_size);
       const giveTakeFilterText = req_body.give_take;
-      const totalData = await GiveTakeService.getAllGiveTake();
-      const giveTakeData = await GiveTakeService.getAllGiveTakeWithPagination(
+      const totalData = await getAllGiveTakeService();
+      const giveTakeData = await getAllGiveTakeWithPaginationService(
         giveTakeFilterText,
         pageNo,
         pageSize
@@ -30,7 +37,7 @@ const GiveTakeController = {
   },
   addGiveTake: async (req, res) => {
     try {
-      const giveTakeData = await GiveTakeService.addGiveTake(req.body);
+      const giveTakeData = await addGiveTakeService(req.body);
       await giveTakeData.save();
 
       res.json({
@@ -44,13 +51,10 @@ const GiveTakeController = {
   },
   editGiveTake: async (req, res) => {
     try {
-      let isExists = await GiveTakeService.findGiveTakeById(req.params.id);
+      let isExists = await findGiveTakeByIdService(req.params.id);
 
       if (isExists) {
-        const giveTakeData = await GiveTakeService.editGiveTake(
-          req.params.id,
-          req.body
-        );
+        const giveTakeData = await editGiveTakeService(req.params.id, req.body);
         await giveTakeData.save();
 
         res.json({
@@ -71,10 +75,10 @@ const GiveTakeController = {
   deleteGiveTake: async (req, res) => {
     try {
       console.log("req.params.i", req.params.i);
-      let isExists = await GiveTakeService.findGiveTakeById(req.params.id);
+      let isExists = await findGiveTakeByIdService(req.params.id);
       console.log("isExists", isExists);
       if (isExists) {
-        await GiveTakeService.deleteGiveTake(req.params.id);
+        await deleteGiveTakeService(req.params.id);
 
         res.json({
           success: true,
@@ -91,5 +95,3 @@ const GiveTakeController = {
     }
   },
 };
-
-module.exports = GiveTakeController;

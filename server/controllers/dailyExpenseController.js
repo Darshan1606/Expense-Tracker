@@ -1,9 +1,15 @@
-const DailyExpenseService = require("../services/dailyExpenseService");
+const {
+  getAllDailyExpenseService,
+  addDailyExpenseService,
+  findDailyExpenseByIdService,
+  editDailyExpenseService,
+  deleteDailyExpenseService,
+} = require("../services/dailyExpenseService");
 
 const DailyExpenseController = {
   getAllDailyExpense: async (req, res) => {
     try {
-      const expenseData = await DailyExpenseService.getAllDailyExpense();
+      const expenseData = await getAllDailyExpenseService();
       res.json({
         success: true,
         message: "get all expenses successfully",
@@ -15,7 +21,7 @@ const DailyExpenseController = {
   },
   addDailyExpense: async (req, res) => {
     try {
-      const expenseData = await DailyExpenseService.addDailyExpense(req.body);
+      const expenseData = await addDailyExpenseService(req.body);
       await expenseData.save();
 
       res.json({
@@ -29,12 +35,10 @@ const DailyExpenseController = {
   },
   editDailyExpense: async (req, res) => {
     try {
-      let isExists = await DailyExpenseService.findDailyExpenseById(
-        req.params.id
-      );
+      let isExists = await findDailyExpenseByIdService(req.params.id);
 
       if (isExists) {
-        const expenseData = await DailyExpenseService.editDailyExpense(
+        const expenseData = await editDailyExpenseService(
           req.params.id,
           req.body
         );
@@ -57,12 +61,10 @@ const DailyExpenseController = {
   },
   deleteDailyExpense: async (req, res) => {
     try {
-      let isExists = await DailyExpenseService.deleteDailyExpense(
-        req.params.id
-      );
+      let isExists = await findDailyExpenseByIdService(req.params.id);
 
       if (isExists) {
-        await DailyExpenseService.deleteDailyExpense(req.params.id);
+        await deleteDailyExpenseService(req.params.id);
 
         res.json({
           success: true,
